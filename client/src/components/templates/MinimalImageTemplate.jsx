@@ -2,13 +2,23 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 const MinimalImageTemplate = ({ data, accentColor }) => {
   const formatDate = (dateStr) => {
-    if (!dateStr) return "";
+  if (!dateStr) return "";
+
+  if (typeof dateStr === "string" && dateStr.toLowerCase() === "present") {
+    return "Present";
+  }
+
+  if (/^\d{4}-\d{2}$/.test(dateStr)) {
     const [year, month] = dateStr.split("-");
+
     return new Date(year, month - 1).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
     });
-  };
+  }
+
+  return dateStr;
+};
 
   return (
     <div className="max-w-5xl mx-auto bg-white text-zinc-800">

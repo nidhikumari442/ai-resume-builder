@@ -2,22 +2,47 @@ import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
 
 const ClassicTemplate = ({ data, accentColor }) => {
   const formatDate = (dateStr) => {
-    if (!dateStr) return "";
+  if (!dateStr) return "";
+
+  if (typeof dateStr === "string" && dateStr.toLowerCase() === "present") {
+    return "Present";
+  }
+
+  if (/^\d{4}-\d{2}$/.test(dateStr)) {
     const [year, month] = dateStr.split("-");
+
     return new Date(year, month - 1).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
     });
-  };
+  }
+
+  return dateStr;
+};
 
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
       {/* Header */}
       <header
-        className="text-center mb-8 pb-6 border-b-2"
-        style={{ borderColor: accentColor }}
-      >
-        <h1 className="text-3xl font-bold mb-2" style={{ color: accentColor }}>
+  className="text-center mb-8 pb-6 border-b-2"
+  style={{ borderColor: accentColor }}
+>
+
+  {data.personal_info?.image && (
+    <div className="flex justify-center mb-4">
+      <img
+        src={
+          typeof data.personal_info.image === "string"
+            ? data.personal_info.image
+            : URL.createObjectURL(data.personal_info.image)
+        }
+        alt="Profile"
+        className="w-28 h-28 rounded-full object-cover border-2 border-gray-300"
+      />
+    </div>
+  )}
+
+  <h1 className="text-3xl font-bold mb-2" style={{ color: accentColor }}>
           {data.personal_info?.full_name || "Your Name"}
         </h1>
 

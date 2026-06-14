@@ -29,7 +29,7 @@ const ResumePreview = ({ data, template, accentcolor, classes = "" }) => {
         {renderTemplate()}
       </div>
 
-      <style jsx>
+      <style >
         {`
           @page {
             size: letter;

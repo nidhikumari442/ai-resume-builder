@@ -61,18 +61,22 @@ const Dashboard = () => {
   };
 
   const uploadResume = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
+  event.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const resumeText = await pdfToText(resume);
+  try {
+    const resumeText = await pdfToText(resume);
 
-      const { data } = await api.post(
-        "/api/ai/upload-resume",
-        { title, resumeText },
-        { headers: { Authorization: token } }
-      );
+    console.log("PDF TEXT:");
+    console.log(resumeText);
 
+    console.log("TITLE:", title);
+
+    const { data } = await api.post(
+      "/api/ai/upload-resume",
+      { title, resumeText },
+      { headers: { Authorization: token } }
+    );
       setTitle("");
       setResume(null);
       setShowUploadResume(false);

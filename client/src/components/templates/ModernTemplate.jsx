@@ -1,14 +1,29 @@
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
 
 const ModernTemplate = ({ data, accentColor }) => {
+  console.log("PERSONAL INFO:", data.personal_info);
+  console.log("Resume Data:", data);
   const formatDate = (dateStr) => {
-    if (!dateStr) return "";
+  if (!dateStr) return "";
+
+  // If AI returns "Present"
+  if (dateStr.toLowerCase() === "present") {
+    return "Present";
+  }
+
+  // If date is in YYYY-MM format
+  if (/^\d{4}-\d{2}$/.test(dateStr)) {
     const [year, month] = dateStr.split("-");
+
     return new Date(year, month - 1).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
     });
-  };
+  }
+
+  // Otherwise just show the text
+  return dateStr;
+};
 
   return (
     <div className="max-w-4xl mx-auto bg-white text-gray-800">
@@ -17,6 +32,19 @@ const ModernTemplate = ({ data, accentColor }) => {
         className="p-8 text-white"
         style={{ backgroundColor: accentColor }}
       >
+        {data.personal_info?.image && (
+  <div className="flex justify-center mb-4">
+    <img
+      src={
+        typeof data.personal_info.image === "string"
+          ? data.personal_info.image
+          : URL.createObjectURL(data.personal_info.image)
+      }
+      alt="Profile"
+      className="w-28 h-28 rounded-full object-cover border-4 border-white"
+    />
+  </div>
+)}
         <h1 className="text-4xl font-light mb-3">
           {data.personal_info?.full_name || "Your Name"}
         </h1>
