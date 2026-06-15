@@ -9,7 +9,7 @@ import aiRouter from "./routes/aiRoutes.js";
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-console.log("MONGO URI =>", process.env.MONGODB_URI);
+
 // Database connection
 await connectDB();
 
